@@ -47,12 +47,59 @@ pip install -r requirements.txt
 
 # Get started
 In general, all the notebooks provided are standalone and may be run separately. However, we still recommend the following order:
-1. [Data Preparation](./notebooks/data_preparation.ipynb), to gain understanding of the ABO data and necessary processing
+## ABO
+### Character-level models
+1. [Data Preparation](./notebooks/data_preparation_amazon.ipynb), to gain understanding of the ABO data and necessary processing
 2. Experiments for running our ML pipeline:
-    1. [Base MNN-EM](./notebooks/experiments/mnn_em.ipynb) (Multimodal Neural Network with Element-wise Multiplication)
-    2. [Extended MNN-EM](./notebooks/experiments/extended_mnn_em.ipynb) (3 inputs)
-    3. [MNN-BTL](./notebooks/experiments/mnn_btl.ipynb) (Multimodal Neural Network with Bidirectional Triplet Loss)
-3. [Visualizing results](./notebooks/visualize_results.ipynb), such as ROC curve, Precision Recall curve and perform threshold optimization
+    1. [Base MNN-EM](./notebooks/experiments/mnn_em_amazon.ipynb) (Multimodal Neural Network with Element-wise Multiplication)
+    2. [Extended MNN-EM](./notebooks/experiments/extended_mnn_em_amazon.ipynb) (3 inputs)
+    3. [MNN-BTL](./notebooks/experiments/mnn_btl_amazon.ipynb) (Multimodal Neural Network with Bidirectional Triplet Loss)
+    4. [Character-level Siamese MLSTM (Falzone et al., 2022)](./notebooks/experiments/siam_char_mlstm_falzone_amazon.ipynb)
+3. [Visualizing results](./notebooks/visualize_results_amazon.ipynb), such as ROC curve, Precision Recall curve and perform threshold optimization
+### Word-level models
+#### Word2Vec
+We compare against Word2Vec embeddings with and without pretraining.
 
-# Todos
-* create main scripts `train.py` and `eval.py`
+We obtained the pretrained word embeddings from: https://huggingface.co/fse/word2vec-google-news-300
+1. [Base MNN-EM (w/o pretrained embeddings)](./notebooks/experiments/mnn_em_w2v_amazon.ipynb)
+2. [Base MNN-EM](./notebooks/experiments/mnn_em_w2v_pretrained_amazon.ipynb)
+3. [Extended MNN-EM](./notebooks/experiments/extended_mnn_em_w2v_pretrained_amazon.ipynb)
+4. [MNN-BTL](./notebooks/experiments/mnn_btl_w2v_pretrained_amazon.ipynb)
+#### GloVe
+We obtain the GloVe embeddings from: https://nlp.stanford.edu/projects/glove/
+
+We only choose the embeddings trained on:
+* Wikipedia 2014 + Gigaword 5 (6B tokens, 400K vocab, uncased, 50d and 100d vectors),
+* Twitter (2B tweets, 27B tokens, 1.2M vocab, uncased, 50d and 100d vectors),
+
+since the # of parameters is the closest to our models.
+1. [Base MNN-EM](./notebooks/experiments/mnn_em_glove_amazon.ipynb)
+2. [Extended MNN-EM](./notebooks/experiments/extended_mnn_em_glove_amazon.ipynb)
+3. [MNN-BTL](./notebooks/experiments/mnn_btl_glove_amazon.ipynb)
+
+#### BERT
+We obtain the BERT model from: https://tfhub.dev/google/collections/bert/1
+
+Due to hardware limitations, we only use `small_bert/bert_en_uncased_L-6_H-256_A-4` with:
+* L=6 (Layers)
+* H=256 (Hidden size)
+* A=4 (Attention heads)
+
+The # of parameters closely match our models.
+1. [Base MNN-EM](./notebooks/experiments/mnn_em_bert_amazon.ipynb)
+2. [Extended MNN-EM](./notebooks/experiments/extended_mnn_em_bert_amazon.ipynb)
+3. [MNN-BTL](./notebooks/experiments/mnn_btl_bert_amazon.ipynb)
+
+## MSCOCO
+1. [Data Preparation](./notebooks/data_preparation_mscoco.ipynb)
+2. Experiments:
+    1. [Base MNN-EM](./notebooks/experiments/mnn_em_mscoco.ipynb)
+    2. [Extended MNN-EM](./notebooks/experiments/extended_mnn_em_mscoco.ipynb)
+    3. [MNN-BTL](./notebooks/experiments/mnn_btl_mscoco.ipynb)
+3. [Visualizing results](./notebooks/visualize_results_mscoco.ipynb)
+## Flickr30k Images
+1. [Data Preparation](./notebooks/data_preparation_flickr30k.ipynb)
+2. Experiments:
+    1. [Base MNN-EM](./notebooks/experiments/mnn_em_flickr30k.ipynb)
+    2. [Extended MNN-EM](./notebooks/experiments/extended_mnn_em_flickr30k.ipynb)
+3. [Visualizing results](./notebooks/visualize_results_flickr30k.ipynb)
